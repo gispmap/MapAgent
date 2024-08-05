@@ -1,6 +1,5 @@
 import streamlit as st
 from openai import OpenAI
-import numpy as np
 import pandas as pd
 import json
 from mapneed import prompt, get_completion
@@ -19,7 +18,7 @@ left_column, right_column = st.columns(2)
 with left_column:
     data_JSON = {}
 
-    msg_contianer = st.container(height=450, border=True)
+    msg_contianer = st.container(height=700, border=True)
     msg_contianer.title("💬 Chatbot")
     msg_contianer.caption("🚀 A Streamlit chatbot powered by OpenAI")
 
@@ -34,8 +33,8 @@ with left_column:
         if use_msg := st.chat_input():
             st.session_state.messages.append({"role": "user", "content": use_msg})
             msg_contianer.chat_message("user").write(use_msg)
-            input = prompt(use_msg)
-            response = get_completion(input)
+            input_msg = prompt(use_msg)
+            response = get_completion(input_msg)
             new_string = response.replace("```", "")
             new_res = new_string.replace("json", "")
             data_JSON = json.loads(new_res)
@@ -47,4 +46,4 @@ with left_column:
                 data_JSON["制图信息"]["CoorList"],
                 columns=['lat', 'lon'])
 
-                st.map(map_data,use_container_width=True)
+                st.map(map_data, use_container_width=True)

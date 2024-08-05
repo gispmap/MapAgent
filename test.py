@@ -1,11 +1,8 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 from openai import OpenAI
-import numpy as np
-import pandas as pd
 import json
 from mapneed import prompt, get_completion
-import plotly.graph_objects as go
 
 # 初始化 OpenAI 客户端
 client = OpenAI()

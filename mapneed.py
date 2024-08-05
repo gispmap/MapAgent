@@ -1,6 +1,7 @@
 from openai import OpenAI
 
-def prompt(input):
+
+def prompt(input_msg):
     template = f"""
         <role>: 你是一个专业的旅游地图制图员，你能够根据用户输入，精确理解用户的需求，并从中提取关键的制图信息
         <instruction>: 
@@ -61,21 +62,22 @@ def prompt(input):
             
             推理的第一步必须是判断用户输入属于什么类型，判断该用户所需要的地图是否包含线路。最后一步必须是输出结果。
         <demand>: 输出中只包含JSON结果，不包含推理过程。推理过程是你的思考过程，你只需要给出最终的推理结果。
-        <input>: ```{input}```
+        <input>: ```{input_msg}```
 
     """
     return template
 
-def get_completion(input):
-    template = prompt(input)
+
+def get_completion(input_msg):
+    template = prompt(input_msg)
     client = OpenAI()
     response = client.chat.completions.create(
-        model = "gpt-4o",
+        model="gpt-4o",
         messages=[
-                {'role': 'user', 'content': template}
-            ],
-            temperature=1,
-            # n=5,
-            top_p=1
+            {'role': 'user', 'content': template}
+        ],
+        temperature=1,
+        # n=5,
+        top_p=1
     )
     return response.choices[0].message.content
