@@ -16,7 +16,7 @@ with st.sidebar:
 left_column, right_column = st.columns([1, 2])
 
 with left_column:
-    msg_contianer = st.container(height=450, border=True)
+    msg_contianer = st.container(height=700, border=True)
     msg_contianer.title("💬 Chatbot")
     msg_contianer.caption("🚀 A Streamlit chatbot powered by OpenAI")
 
@@ -33,8 +33,8 @@ with left_column:
         if use_msg := st.chat_input():
             st.session_state.messages.append({"role": "user", "content": use_msg})
             msg_contianer.chat_message("user").write(use_msg)
-            input = prompt(use_msg)
-            response = get_completion(input)
+            input_msg = prompt(use_msg)
+            response = get_completion(input_msg)
             new_string = response.replace("```", "")
             new_res = new_string.replace("json", "")
             data_JSON = json.loads(new_res)
@@ -44,7 +44,7 @@ with left_column:
 
 # 在右侧显示地图
 with right_column:
-    fig, ax = plt.subplots(figsize=(10, 10))
+    fig, ax = plt.subplots(figsize=(12, 7))
     if "制图信息" in st.session_state["data_JSON"]:
         try:
             points = st.session_state["data_JSON"]["制图信息"]["CoorList"]
@@ -67,9 +67,6 @@ with right_column:
                 fig.tight_layout()  # 调整子图参数，以给坐标轴留出更多空间
             else:
                 ax.text(0.5, 0.5, 'No data available', horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
-
-            
-            
         except KeyError:
             st.error("Error extracting coordinates for map display")
     else:
