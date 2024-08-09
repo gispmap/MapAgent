@@ -45,6 +45,7 @@ with left_column:
 # 在右侧显示地图
 with right_column:
     fig, ax = plt.subplots(figsize=(12, 7))
+    plt.subplots_adjust(left=1, right=2, top=2, bottom=1)
     if "制图信息" in st.session_state["data_JSON"]:
         try:
             points = st.session_state["data_JSON"]["制图信息"]["CoorList"]
@@ -59,19 +60,19 @@ with right_column:
                 ax.set_title('Route Display')
                 ax.set_xlabel('Longitude')
                 ax.set_ylabel('Latitude')
-                ax.grid(True)
+                # ax.grid(True)
                 ax.legend()
-                ax.set_aspect('equal', adjustable='box')
+                # ax.set_aspect('equal', adjustable='box')
                 ax.axis('off')
                 # 强制坐标轴框的尺寸
-                fig.tight_layout()  # 调整子图参数，以给坐标轴留出更多空间
+                # fig.tight_layout()  # 调整子图参数，以给坐标轴留出更多空间
             else:
                 ax.text(0.5, 0.5, 'No data available', horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
         except KeyError:
             st.error("Error extracting coordinates for map display")
     else:
         # Display empty canvas with light orange background
-        ax.set_facecolor('#FFDAB9')
+        fig.patch.set_facecolor('#FFDAB9')
         ax.set_xticks([])
         ax.set_yticks([])
     # 使用 Streamlit 显示图形

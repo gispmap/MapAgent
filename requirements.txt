@@ -1,6 +1,6 @@
-streamlit>=1.28
+streamlit
 langchain
-openai>=1.2
+openai
 duckduckgo-search
 anthropic
 trubrics
